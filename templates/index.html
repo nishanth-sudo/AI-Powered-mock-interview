@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Interview Simulator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_additional.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="theme-switch">
+      <label>
+        <input type="checkbox" id="themeToggle">
+        <span class="toggle-slider"></span>
+        <span id="themeLabel" style="margin-left: 10px;">Dark Mode</span>
+      </label>
+    </div>
+
+    <div class="welcome-panel">
+      <h1>AI Interview Simulator</h1>
+      <p class="subtitle">Practice your interview skills with AI-powered feedback</p>
+      
+      <div class="interview-types">
+        <h2>Choose Your Interview Type</h2>
+        
+        <div class="interview-cards">
+          <div class="interview-card" id="codingCard">
+            <div class="card-icon">
+              <i class="fas fa-code"></i>
+            </div>
+            <h3>Coding Interview</h3>
+            <p>Practice coding problems in various languages from beginner to advanced level</p>
+            <div class="languages-preview">
+              <span class="language-tag">Python</span>
+              <span class="language-tag">JavaScript</span>
+              <span class="language-tag">Java</span>
+              <span class="language-tag">C++</span>
+              <span class="language-tag">C#</span>
+            </div>
+            <button class="select-btn" id="selectCoding">Select <i class="fas fa-arrow-right"></i></button>
+          </div>
+          
+          <div class="interview-card" id="technicalCard">
+            <div class="card-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3>Technical Interview</h3>
+            <p>Practice MCQ-based technical questions across a variety of domains</p>
+            <div class="languages-preview">
+              <span class="language-tag">DBMS</span>
+              <span class="language-tag">Networks</span>
+              <span class="language-tag">OOP</span>
+              <span class="language-tag">Cloud</span>
+              <span class="language-tag">ML/DL</span>
+            </div>
+            <button class="select-btn" id="selectTechnical">Select <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Coding Interview Form (Hidden initially) -->
+      <div id="codingForm" class="domain-selection" style="display: none;">
+        <div class="back-button" id="backFromCoding">
+          <i class="fas fa-arrow-left"></i> Back to selection
+        </div>
+        <h2>Coding Interview Setup</h2>
+        <p>Choose the programming language and difficulty level:</p>
+        
+        <form action="/coding_interview" method="GET">
+          <div class="domain-options">
+            <div class="domain-option">
+              <input type="radio" id="python" name="domain" value="Python" checked>
+              <label for="python">Python</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="javascript" name="domain" value="JavaScript">
+              <label for="javascript">JavaScript</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="java" name="domain" value="Java">
+              <label for="java">Java</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="cpp" name="domain" value="C++">
+              <label for="cpp">C++</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="csharp" name="domain" value="C#">
+              <label for="csharp">C#</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="sql" name="domain" value="SQL">
+              <label for="sql">SQL</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="dsa" name="domain" value="Data Structures & Algorithms">
+              <label for="dsa">Data Structures & Algorithms</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="radio" id="webdev" name="domain" value="Web Development">
+              <label for="webdev">Web Development</label>
+            </div>
+          </div>
+          
+          <div class="experience-level">
+            <h3>Experience Level</h3>
+            <select name="level" id="level">
+              <option value="beginner">Beginner</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="primary-btn">Start Coding Interview</button>
+        </form>
+      </div>
+      
+      <!-- Technical Interview Form (Hidden initially) -->
+      <div id="technicalForm" class="domain-selection" style="display: none;">
+        <div class="back-button" id="backFromTechnical">
+          <i class="fas fa-arrow-left"></i> Back to selection
+        </div>
+        <h2>Technical Interview Setup</h2>
+        <p>Select the technical domains you want to be questioned on:</p>
+        
+        <form action="/technical_interview" method="GET">
+          <div class="domain-options">
+            <div class="domain-option">
+              <input type="checkbox" id="dbms" name="topics" value="DBMS" checked>
+              <label for="dbms">Database Management Systems</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="networks" name="topics" value="Computer Networks">
+              <label for="networks">Computer Networks</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="oops" name="topics" value="OOP">
+              <label for="oops">Object-Oriented Programming</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="cloud" name="topics" value="Cloud Computing">
+              <label for="cloud">Cloud Computing</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="ml" name="topics" value="Machine Learning">
+              <label for="ml">Machine Learning</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="dl" name="topics" value="Deep Learning">
+              <label for="dl">Deep Learning</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="os" name="topics" value="Operating Systems">
+              <label for="os">Operating Systems</label>
+            </div>
+            
+            <div class="domain-option">
+              <input type="checkbox" id="dsa" name="topics" value="DSA">
+              <label for="dsa">Data Structures & Algorithms</label>
+            </div>
+          </div>
+          
+          <div class="experience-level">
+            <h3>Difficulty Level</h3>
+            <select name="level" id="technical-level">
+              <option value="beginner">Basic</option>
+              <option value="intermediate" selected>Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="primary-btn">Start Technical Interview</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cards and forms
+      const codingCard = document.getElementById('codingCard');
+      const technicalCard = document.getElementById('technicalCard');
+      const codingForm = document.getElementById('codingForm');
+      const technicalForm = document.getElementById('technicalForm');
+      const interviewCards = document.querySelector('.interview-cards');
+      
+      // Buttons
+      const selectCoding = document.getElementById('selectCoding');
+      const selectTechnical = document.getElementById('selectTechnical');
+      const backFromCoding = document.getElementById('backFromCoding');
+      const backFromTechnical = document.getElementById('backFromTechnical');
+      
+      // Select coding interview
+      selectCoding.addEventListener('click', () => {
+        interviewCards.style.display = 'none';
+        codingForm.style.display = 'block';
+      });
+      
+      // Select technical interview
+      selectTechnical.addEventListener('click', () => {
+        interviewCards.style.display = 'none';
+        technicalForm.style.display = 'block';
+      });
+      
+      // Back buttons
+      backFromCoding.addEventListener('click', () => {
+        codingForm.style.display = 'none';
+        interviewCards.style.display = 'flex';
+      });
+      
+      backFromTechnical.addEventListener('click', () => {
+        technicalForm.style.display = 'none';
+        interviewCards.style.display = 'flex';
+      });
+      
+      // Card hover effects
+      [codingCard, technicalCard].forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.classList.add('card-hover');
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.classList.remove('card-hover');
+        });
+      });
+    });
+  </script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/enhanced.js') }}"></script>
+</body>
+</html>

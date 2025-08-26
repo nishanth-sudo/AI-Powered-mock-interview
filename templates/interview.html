@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Programming Interview Simulator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_additional.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container" data-theme="light">
+    <div class="theme-switch">
+      <label>
+        <input type="checkbox" id="themeToggle">
+        <span class="toggle-slider"></span>
+        <span id="themeLabel" style="margin-left: 10px;">Dark Mode</span>
+      </label>
+    </div>
+    
+    <header class="interview-header">
+      <h1><i class="fas fa-laptop-code"></i> Technical Programming Interview <span class="domain-label" id="domainLabel">{{ domain }}</span></h1>
+      <p class="subtitle">Practice your coding interview skills with AI feedback - Level: 
+        <span class="badge" id="levelLabel" style="background-color: 
+          {% if level == 'beginner' %}#4ade80{% elif level == 'intermediate' %}#fbbf24{% else %}#f87171{% endif %};">
+          {{ level|capitalize }}
+        </span>
+      </p>
+      
+      <div class="progress-container">
+        <div class="progress-stats">
+          <span><i class="fas fa-comment-dots"></i> Conversation in progress</span>
+        </div>
+      </div>
+    </header>
+    
+    <div class="interview-panel">
+      <div id="chatBox" class="chat-box"></div>
+      
+      <div class="input-area">
+        <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
+        <div class="button-group">
+          <button id="submitAnswer" class="primary-btn"><i class="fas fa-paper-plane"></i> Submit Answer</button>
+          <button id="endInterview" class="warning-btn"><i class="fas fa-flag-checkered"></i> End Interview</button>
+          <button id="resetInterview" class="secondary-btn"><i class="fas fa-sync-alt"></i> Reset Interview</button>
+          <a href="/" class="secondary-btn"><i class="fas fa-home"></i> Back to Home</a>
+        </div>
+        <div class="typing-indicator" id="typingIndicator" style="display: none;">
+          <div class="loading"><div></div><div></div><div></div></div>
+          <span>AI is thinking...</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="interview-tips">
+      <h3>Interview Tips for {{ domain }}</h3>
+      <ul id="domainTips">
+        <!-- Domain-specific tips will be inserted here by JavaScript -->
+      </ul>
+    </div>
+  </div>
+  
+  <!-- Pass the domain and level to JavaScript -->
+  <script>
+    const selectedDomain = "{{ domain }}";
+    const selectedLevel = "{{ level }}";
+  </script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/enhanced.js') }}"></script>
+</body>
+</html>

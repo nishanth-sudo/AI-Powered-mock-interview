@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Interview Simulator</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_additional.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/enhanced.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container" data-theme="light">
+    <!-- Theme Switch -->
+    <div class="theme-switch">
+      <label>
+        <input type="checkbox" id="themeToggle">
+        <span class="toggle-slider"></span>
+        <span id="themeLabel" style="margin-left: 10px;">Dark Mode</span>
+      </label>
+    </div>
+
+    <!-- Header -->
+    <header class="interview-header">
+      <h1><i class="fas fa-question-circle"></i> Technical Interview 
+        <span class="domain-label" id="domainLabel">{{ topics|join(', ') }}</span>
+      </h1>
+      <p class="subtitle">
+        Test your knowledge with MCQs - Level: 
+        <span class="badge" style="background-color: 
+          {% if level == 'beginner' %}#4ade80
+          {% elif level == 'intermediate' %}#fbbf24
+          {% else %}#f87171{% endif %};">
+          {{ level|capitalize }}
+        </span>
+      </p>
+
+      <!-- Progress -->
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-stats">
+          <span id="currentQuestion">Question: 1/10</span>
+          <span id="scoreDisplay">Score: 0</span>
+          <span id="timer" class="timer"><i class="fas fa-clock"></i> 30:00</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MCQ Panel -->
+    <div class="interview-panel">
+      <div id="mcqContainer" class="mcq-container">
+        <p id="mcqQuestion" class="mcq-question">Loading question...</p>
+        <div id="mcqOptions" class="mcq-options">
+          <!-- Options injected dynamically -->
+        </div>
+        <div id="mcqFeedback" class="mcq-feedback"></div>
+        <div class="mcq-submit">
+          <button id="submitMcq" class="primary-btn"><i class="fas fa-check"></i> Submit Answer</button>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="nextQuestion" class="primary-btn" style="display: none;">
+          <i class="fas fa-arrow-right"></i> Next Question
+        </button>
+        <button id="endInterview" class="warning-btn">
+          <i class="fas fa-flag-checkered"></i> End Interview
+        </button>
+        <button id="resetInterview" class="secondary-btn">
+          <i class="fas fa-sync-alt"></i> Restart Quiz
+        </button>
+        <a href="/" class="secondary-btn"><i class="fas fa-home"></i> Back to Home</a>
+      </div>
+
+      <div id="loadingIndicator" style="display: none; text-align: center; margin: 20px 0;">
+        <div class="loading"><div></div><div></div><div></div></div>
+        <p>Generating next question...</p>
+      </div>
+    </div>
+
+    <!-- Interview Tips -->
+    <div class="interview-tips">
+      <h3>Interview Tips</h3>
+      <ul id="interviewTips">
+        <li>Read each question carefully before answering</li>
+        <li>If unsure, eliminate obviously wrong answers first</li>
+        <li>Look for keywords in the question that may hint at the correct answer</li>
+        <li>The most specific and comprehensive answer is often correct</li>
+        <li>Pay attention to feedback to improve your knowledge</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Jinja variables → JS -->
+  <script>
+    const selectedTopics = {{ topics|tojson }};
+    const selectedLevel = "{{ level }}";
+  </script>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/technical_interview.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/enhanced.js') }}"></script>
+</body>
+</html>
